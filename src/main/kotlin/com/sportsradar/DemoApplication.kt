@@ -1,4 +1,4 @@
-package com.sportsradar.demo
+package com.sportsradar
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
