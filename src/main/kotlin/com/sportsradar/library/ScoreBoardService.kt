@@ -7,20 +7,20 @@ import kotlin.concurrent.withLock
 
 @Service
 class ScoreBoardService {
-    private val matches: MutableList<Match> = mutableListOf();
-    private val lock = ReentrantLock();
+    private val matches: MutableList<Match> = mutableListOf()
+    private val lock = ReentrantLock()
 
     fun startMatch(homeTeam: String, awayTeam: String): Match? {
         val existingMatch = matches.find { it.homeTeam == homeTeam && it.awayTeam == awayTeam }
         if(existingMatch != null) {
-            throw Exception("Match already exists");
+            throw Exception("Match already exists")
         }
 
         val match = Match(homeTeam, awayTeam)
         lock.withLock {
-            matches.add(match);
+            matches.add(match)
         }
-        return match;
+        return match
     }
 
     fun updateScore(homeTeam: String, awayTeam: String, homeScore: Int, awayScore: Int): Match? {
