@@ -24,7 +24,7 @@ class ScoreBoardService {
         return match
     }
 
-    fun updateScore(homeTeam: String, awayTeam: String, minute: Int, eventType: String, isHomeEvent: Boolean): Match? {
+    fun updateScore(homeTeam: String, awayTeam: String, minute: Int, eventType: String, isHomeEvent: Boolean, playerInitials: String): Match? {
         val match = matches.find { it.homeTeam == homeTeam && it.awayTeam == awayTeam }
 
         match?.let {
@@ -32,8 +32,7 @@ class ScoreBoardService {
                 if (isHomeEvent) it.homeScore++ else it.awayScore++
             }
 
-            val event = Event(homeTeam, awayTeam, minute, eventType, isHomeEvent, it.homeScore, it.awayScore)
-            println(event);
+            val event = Event(homeTeam, awayTeam, minute, eventType, isHomeEvent, it.homeScore, it.awayScore, playerInitials)
             it.events.add(event)
         }
 

@@ -26,8 +26,7 @@ class ScoreBoardController(private val scoreBoardService: ScoreBoardService) {
 
     @PutMapping("/update")
     fun updateScore(@RequestBody event: Event): ResponseEntity<Match>{
-        println(event);
-        val updatedMatch = scoreBoardService.updateScore(event.homeTeam, event.awayTeam, event.minute, event.eventType, event.isHomeEvent);
+        val updatedMatch = scoreBoardService.updateScore(event.homeTeam, event.awayTeam, event.minute, event.eventType, event.isHomeEvent, event.playerInitials);
         return ResponseEntity.ok(updatedMatch)
     }
 

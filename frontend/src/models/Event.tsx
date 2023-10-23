@@ -4,4 +4,5 @@ export default interface Event {
     isHomeEvent: boolean;
     currentHomeScore: number;
     currentAwayScore: number;
+    playerInitials: string;
 }

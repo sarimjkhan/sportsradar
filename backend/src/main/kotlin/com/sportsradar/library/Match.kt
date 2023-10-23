@@ -7,7 +7,8 @@ data class Event(
     val eventType: String,
     val isHomeEvent: Boolean,
     val currentHomeScore: Int = 0,
-    val currentAwayScore: Int = 0
+    val currentAwayScore: Int = 0,
+    val playerInitials: String
 )
 
 data class Match(

@@ -22,8 +22,8 @@ const MatchesList: React.FC = () => {
     const renderEvents = (events: Event[]) => {
         return events.map((event, index) => (
             <div key={index}>
-                {event.eventType} scored after {event.minute} minutes: 
-                {event.currentHomeScore} - {event.currentAwayScore} 
+                {event.eventType} {(event.eventType === 'goal') ? 'by': 'for'} {event.playerInitials} after {event.minute} minutes, 
+                Total Score: {event.currentHomeScore} - {event.currentAwayScore} 
             </div>
         ));
     }

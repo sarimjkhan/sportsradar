@@ -11,6 +11,7 @@ const UpdateScore: React.FC<UpdateScoreProps> = ({ onScoreUpdated }) => {
     const [eventType, setEventType] = useState('goal');
     const [minute, setMinute] = useState(0);
     const [isHomeEvent, setIsHomeEvent] = useState(true);
+    const [playerInitials, setPlayerInitials] = useState('');
 
     const handleUpdateScore = async () => {
         try {
@@ -19,7 +20,8 @@ const UpdateScore: React.FC<UpdateScoreProps> = ({ onScoreUpdated }) => {
                 awayTeam,
                 eventType,
                 minute,
-                isHomeEvent
+                isHomeEvent,
+                playerInitials
             });
             console.log('Score updated successfully');
             onScoreUpdated();
@@ -42,6 +44,8 @@ const UpdateScore: React.FC<UpdateScoreProps> = ({ onScoreUpdated }) => {
                 <label>Event Type:</label>
                 <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
                     <option value="goal">goal</option>
+                    <option value="yellow_card">Yellow Card</option>
+                    <option value="red_card">Red Card</option>
                 </select>
             </div>
             <div>
@@ -53,6 +57,15 @@ const UpdateScore: React.FC<UpdateScoreProps> = ({ onScoreUpdated }) => {
             <div>
                 <label>Minute:</label>
                 <input type="text" value={minute} onChange={(e) => setMinute(parseInt(e.target.value))} />
+            </div>
+            <div>
+                <label>Player name</label>
+                <input 
+                    type="text" 
+                    value={playerInitials}
+                    onChange={(e) => setPlayerInitials(e.target.value)}
+                    placeholder="Player Initials"
+                />
             </div>
             <button onClick={handleUpdateScore}>Update Score</button>
         </div>
