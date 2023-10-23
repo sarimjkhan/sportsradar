@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
-
-interface Match {
-    homeTeam: string;
-    awayTeam: string;
-    homeScore: number;
-    awayScore: number;
-    startTime: number;
-}
+import Match from '../models/Match';
+import Event from '../models/Event'; // Import the Event model
 
 const MatchesList: React.FC = () => {
     const [matches, setMatches] = useState<Match[]>([]);
@@ -25,28 +19,24 @@ const MatchesList: React.FC = () => {
         fetchMatches();
     }, []);
 
-    const handleMatchDelete = async (homeTeam: string, awayTeam: string) => {
-        try {
-            const response = await axiosInstance.delete('/api/scoreboard/finish', {data : {
-                homeTeam,
-                awayTeam
-            }})
-
-            setMatches((prevMatches) => 
-                prevMatches.filter(match => !(match.homeTeam === homeTeam && match.awayTeam === awayTeam))
-            );
-        } catch (error) {
-            console.error("Failed to delete the match: ", error)
-        }
+    const renderEvents = (events: Event[]) => {
+        return events.map((event, index) => (
+            <div key={index}>
+                {event.eventType} scored after {event.minute} minutes: 
+                {event.currentHomeScore} - {event.currentAwayScore} 
+            </div>
+        ));
     }
 
     return (
         <div>
             <h3>Matches List</h3>
             {matches.map((match, index) => (
-                <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span>{match.homeTeam} {match.homeScore} - {match.awayTeam} {match.awayScore}</span>
-                    <button onClick={() => handleMatchDelete(match.homeTeam, match.awayTeam)}>Finish</button>
+                <div key={index} style={{ marginBottom: '20px' }}>
+                    <h4>{match.homeTeam} vs {match.awayTeam}</h4>
+                    <div>
+                        {renderEvents(match.events)}
+                    </div>
                 </div>
             ))}
         </div>
