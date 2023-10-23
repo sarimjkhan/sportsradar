@@ -1,5 +1,6 @@
 package com.sportsradar.client
 
+import com.sportsradar.library.Event
 import com.sportsradar.library.Match
 import com.sportsradar.library.ScoreBoardService
 import org.springframework.http.ResponseEntity
@@ -24,8 +25,9 @@ class ScoreBoardController(private val scoreBoardService: ScoreBoardService) {
     }
 
     @PutMapping("/update")
-    fun updateScore(@RequestBody match: Match): ResponseEntity<Match>{
-        val updatedMatch = scoreBoardService.updateScore(match.homeTeam, match.awayTeam, match.homeScore, match.awayScore)
+    fun updateScore(@RequestBody event: Event): ResponseEntity<Match>{
+        println(event);
+        val updatedMatch = scoreBoardService.updateScore(event.homeTeam, event.awayTeam, event.minute, event.eventType, event.isHomeEvent);
         return ResponseEntity.ok(updatedMatch)
     }
 

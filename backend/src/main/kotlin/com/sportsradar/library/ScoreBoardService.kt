@@ -8,6 +8,7 @@ import kotlin.concurrent.withLock
 @Service
 class ScoreBoardService {
     private val matches: MutableList<Match> = mutableListOf()
+
     private val lock = ReentrantLock()
 
     fun startMatch(homeTeam: String, awayTeam: String): Match? {
@@ -23,14 +24,20 @@ class ScoreBoardService {
         return match
     }
 
-    fun updateScore(homeTeam: String, awayTeam: String, homeScore: Int, awayScore: Int): Match? {
-        val matchToUpdate = matches.find { it.homeTeam == homeTeam && it.awayTeam == awayTeam }
-            ?: throw Exception("Match not found")
+    fun updateScore(homeTeam: String, awayTeam: String, minute: Int, eventType: String, isHomeEvent: Boolean): Match? {
+        val match = matches.find { it.homeTeam == homeTeam && it.awayTeam == awayTeam }
 
-        matchToUpdate.homeScore = homeScore
-        matchToUpdate.awayScore = awayScore
+        match?.let {
+            if (eventType == "goal") {
+                if (isHomeEvent) it.homeScore++ else it.awayScore++
+            }
 
-        return matchToUpdate
+            val event = Event(homeTeam, awayTeam, minute, eventType, isHomeEvent, it.homeScore, it.awayScore)
+            println(event);
+            it.events.add(event)
+        }
+
+        return match
     }
 
     fun finishMatch(homeTeam: String, awayTeam: String): Boolean {
