@@ -22,9 +22,9 @@ class ScoreBoardServiceTest {
     @Test
     fun testUpdateScore() {
         service.startMatch("team1", "team2")
-        val updatedMatch = service.updateScore("team1", "team2", 2, 3)
-        assertEquals(2, updatedMatch?.homeScore)
-        assertEquals(3, updatedMatch?.awayScore)
+        val updatedMatch = service.updateScore("team1", "team2", 2, "goal", true, "Ronaldo")
+        assertEquals(1, updatedMatch?.homeScore)
+        assertEquals(0, updatedMatch?.awayScore)
     }
 
     @Test
@@ -36,14 +36,14 @@ class ScoreBoardServiceTest {
     @Test
     fun testMatchSummary() {
         service.startMatch("teamA", "teamB")
-        service.updateScore("teamA", "teamB", 2, 3)
+        service.updateScore("teamA", "teamB", 2, "goal", true, "Ronaldo")
 
         val summary = service.getMatchSummary()
         assertEquals(1, summary.size)
         assertEquals("teamA", summary[0].homeTeam)
         assertEquals("teamB", summary[0].awayTeam)
-        assertEquals(2, summary[0].homeScore)
-        assertEquals(3, summary[0].awayScore)
+        assertEquals(1, summary[0].homeScore)
+        assertEquals(0, summary[0].awayScore)
     }
 
     @Test
